@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swim Top Times</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='quest_logo.png') }}" alt="Quest Swimming Logo">
+        <h1>QUEST ALL TIME TOP 10 TIMES</h1>
+    </div>
+
+    <div class="content">
+        <form id="filter-form">
+            <label for="course">Course:</label>
+            <select id="course" name="course"></select>
+        
+            <label for="event">Event:</label>
+            <select id="event" name="event"></select>
+        
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender"></select>
+            
+            <label for="age_group_desc">Age Group:</label>
+            <select id="age_group_desc" name="age_group_desc"></select>
+            
+            <button type="submit">Get Results</button>
+        </form>
+
+        <h2>Results</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Swim Time</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="results-table"></tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Fetch dropdown options
+            $.getJSON('/get-dropdown-options', function (data) {
+                // Populate Course dropdown
+                $('#course').append(data.courses.map(c => `<option value="${c}">${c}</option>`));
+
+                // Populate Gender dropdown
+                $('#gender').append(Object.entries(data.genders).map(([key, value]) => `<option value="${value}">${key}</option>`));
+
+                // Populate Age Group dropdown
+                $('#age_group_desc').append(Object.entries(data["Age Groups"]).map(([key, value]) => `<option value="${value}">${key}</option>`));
+
+                // Populate Event dropdown based on selected Course
+                $('#course').change(function () {
+                    const selectedCourse = $(this).val();
+                    const events = data.events[selectedCourse];
+
+                    // Clear the Event dropdown and append in the provided order
+                    $('#event').empty();
+                    Object.entries(events).forEach(([key, value]) => {
+                        $('#event').append(`<option value="${value}">${key}</option>`);
+                    });
+                }).trigger('change');
+            });
+
+            // Handle form submission
+            $('#filter-form').submit(function (e) {
+                e.preventDefault();
+                const payload = {
+                    course: $('#course').val(),  // Determines the table in the backend
+                    "event_code": $('#event').val(),  // Matches the backend's key for the event
+                    "type_code": $('#gender').val(),  // Matches the backend's key for gender
+                    "age_group_desc": $('#age_group_desc').val()  // Matches the backend's key for age group
+                };
+
+                // Post the selected data to the backend and update the results table
+                $.ajax({
+                    url: '/get-top-results',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    success: function (data) {
+                        // Log the data to check what is returned
+                        console.log(data);
+
+                        // Check if data is empty
+                        if (data.length === 0) {
+                            $('#results-table').html('<tr><td colspan="4">No results found</td></tr>');
+                            return;
+                        }
+
+                        // Populate table rows with the received data
+                        const rows = data.map(row => `
+                            <tr>
+                                <td>${row.rank}</td>
+                                <td>${row.name}</td>
+                                <td>${row.swim_time}</td>
+                                <td>${row.date}</td>
+                            </tr>
+                        `).join('');
+                        $('#results-table').html(rows);
+
+                        // Trigger CSS animation by adding the 'show' class dynamically
+                        setTimeout(() => {
+                            $('#results-table tr').each(function (index) {
+                                $(this).addClass('show');
+                            });
+                        }, 50);
+                    },
+                    error: function (xhr, status, error) {
+                        // Log and alert the error for debugging
+                        console.error(`Failed to fetch results: ${xhr.responseText || error}`);
+                        alert('Error fetching results. Please try again later.');
+                    }
+                });
+            });
+        });        
+    </script>
+</body>
+</html>
