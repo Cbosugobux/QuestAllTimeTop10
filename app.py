@@ -5,7 +5,8 @@ import psycopg
 app = Flask(__name__)
 
 # Database connection details
-DB_CONNECTION = "dbname='Quest Top Times' user='postgres' password='postgres'"
+DB_CONNECTION = "postgresql://postgres:postgres@localhost:5432/Quest%20Top%20Times"
+
 
 
 
@@ -27,12 +28,16 @@ def get_dropdown_options():
                 "500 Free": "500 FR SCY",
                 "1000 Free": "1000 FR SCY",
                 "1650 Free": "1650 FR SCY",
+                "50 Back" : "50 BA SCY",
                 "100 Back": "100 BK SCY",
                 "200 Back": "200 BK SCY",
+                "50 Breast" : "50 BR SCY",
                 "100 Breast": "100 BR SCY",
                 "200 Breast": "200 BR SCY",
+                "50 Fly" : "50 FL SCY",
                 "100 Fly": "100 FL SCY",
                 "200 Fly": "200 FL SCY",
+                "100 IM" : "100 IM SCY",
                 "200 IM": "200 IM SCY",
                 "400 IM": "400 IM SCY",
                 "200 Free Relay": "200 FR-R SCY",
@@ -48,10 +53,13 @@ def get_dropdown_options():
                 "500 Free": "500 FR LCM",
                 "800 Free": "800 FR LCM",
                 "1500 Free": "1500 FR LCM",
+                "50 Back" : "50 BA LCM",
                 "100 Back": "100 BK LCM",
                 "200 Back": "200 BK LCM",
+                "50 Breast" : "50 BR LCM",
                 "100 Breast": "100 BR LCM",
                 "200 Breast": "200 BR LCM",
+                "50 Fly" : "50 FL LCM",
                 "100 Fly": "100 FL LCM",
                 "200 Fly": "200 FL LCM",
                 "200 IM": "200 IM LCM",
@@ -73,7 +81,7 @@ def get_dropdown_options():
             "13-14": "13-14",
             "15-16": "15-16",
             "17-18": "17-18",
-            "OPEN": "OPEN"
+            "Open": "Open"
         }
     }
     
@@ -101,6 +109,10 @@ def get_top_results():
 
         # Determine the table name
         table_name = "scy_top_times" if course == "SCY" else "lcm_top_times"
+        
+        if table_name not in ["scy_top_times", "lcm_top_times"]:
+            return jsonify({"error": "Invalid table name"}), 400
+
 
         # Connect to database
         try:
@@ -140,7 +152,10 @@ def get_top_results():
 
         # Format results
         results = [
-            {"rank": row[0], "name": row[1], "swim_time": row[2], "date": row[3].strftime("%Y-%m-%d")}
+            {"rank": row[0], 
+             "name": row[1],
+             "swim_time": row[2], 
+             "date": row[3].strftime("%Y-%m-%d") if row[3] else None}
             for row in rows
         ]
         return jsonify(results)
