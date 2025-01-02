@@ -166,4 +166,10 @@ def get_top_results():
         return jsonify({"error": f"Unexpected error: {e}"}), 500
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # Use Waitress only for production if necessary
+    try:
+        from waitress import serve
+        serve(app, host="0.0.0.0", port=8080)
+    except ImportError:
+        # Fallback for local development
+        app.run(debug=True, host="0.0.0.0", port=8080)
