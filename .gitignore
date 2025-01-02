@@ -170,5 +170,5 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-# Postgres Password
-secret-password = DB_CONNECTION = AVNS_mPrTlCU3kd6LehdV1pt
+#.env
+.env
