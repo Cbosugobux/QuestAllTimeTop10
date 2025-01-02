@@ -5,7 +5,8 @@ import psycopg
 app = Flask(__name__)
 
 # Database connection details
-DB_CONNECTION = "postgresql://postgres:postgres@localhost:5432/Quest%20Top%20Times"
+DB_CONNECTION = "postgresql://doadmin:AVNS_mPrTlCU3kd6LehdV1pt@db-postgresql-nyc3-46509-do-user-18251514-0.g.db.ondigitalocean.com:25060/defaultdb?sslmode=require"
+
 
 
 
