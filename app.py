@@ -166,6 +166,4 @@ def get_top_results():
         return jsonify({"error": f"Unexpected error: {e}"}), 500
 
 if __name__ == "__main__":
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=8080)
-
+    app.run(debug=True)
