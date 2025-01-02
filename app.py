@@ -1,8 +1,16 @@
 from collections import OrderedDict
 from flask import Flask, jsonify, request, render_template
 import psycopg
+from dotenv import load_dotenv
+import os
 
 app = Flask(__name__)
+
+load_dotenv()  # Loads variables from the .env file
+
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+
+DB_CONNECTION = f"postgresql://doadmin:{DB_PASSWORD}@db-postgresql-nyc3-46509-do-user-18251514-0.g.db.ondigitalocean.com:25060/Quest_Top_Times?sslmode=require"
 
 # Database connection details
 DB_CONNECTION = f"postgresql://doadmin:{secret-password}@db-postgresql-nyc3-46509-do-user-18251514-0.g.db.ondigitalocean.com:25060/Quest_Top_Times?sslmode=require"
