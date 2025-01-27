@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 load_dotenv()  # Loads variables from the .env file
 
-DB_CONNECTION = f"postgres://postgres:postgres@localhost:5432/your_local_db_name"
+DB_CONNECTION = f"postgres://ueu296kq4fhj5o:p7f491baf340164b6f5c07ca86cb4d965e041f8506de4b2443e6cd23f482d6357@cfiiu1hn72og1g.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/dbir18288fa0p3"
 
 
 # Endpoint to render the HTML frontend
