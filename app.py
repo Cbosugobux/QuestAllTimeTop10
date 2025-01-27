@@ -175,7 +175,9 @@ if __name__ == "__main__":
     # Use Waitress for production if necessary
     try:
         from waitress import serve
+        print(f"Starting Waitress server on port {port}...")  # Debugging
         serve(app, host="0.0.0.0", port=port)
     except ImportError:
         # Fallback for local development
+        print(f"Starting Flask development server on port {port}...")  # Debugging
         app.run(debug=True, host="0.0.0.0", port=port)
