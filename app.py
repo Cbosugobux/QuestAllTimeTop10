@@ -169,10 +169,13 @@ def get_top_results():
         return jsonify({"error": f"Unexpected error: {e}"}), 500
 
 if __name__ == "__main__":
-    # Use Waitress only for production if necessary
+    # Use the PORT environment variable provided by Heroku
+    port = int(os.environ.get("PORT", 8080))  # Default to 8080 if $PORT is not set
+
+    # Use Waitress for production if necessary
     try:
         from waitress import serve
-        serve(app, host="0.0.0.0", port=8080)
+        serve(app, host="0.0.0.0", port=port)
     except ImportError:
         # Fallback for local development
-        app.run(debug=True, host="0.0.0.0", port=8080)
+        app.run(debug=True, host="0.0.0.0", port=port)
