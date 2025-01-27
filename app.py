@@ -8,9 +8,7 @@ app = Flask(__name__)
 
 load_dotenv()  # Loads variables from the .env file
 
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-
-DB_CONNECTION = f"postgresql://doadmin:{DB_PASSWORD}@db-postgresql-nyc3-46509-do-user-18251514-0.g.db.ondigitalocean.com:25060/Quest_Top_Times?sslmode=require"
+DB_CONNECTION = f"postgres://postgres:postgres@localhost:5432/your_local_db_name"
 
 
 # Endpoint to render the HTML frontend
