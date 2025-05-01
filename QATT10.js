@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('filter-form');
     const resultsTable = document.getElementById('results-table');
 
-    // All dropdown options embedded
     const dropdownOptions = {
         courses: ["SCY", "LCM"],
         events: {
@@ -109,7 +108,7 @@ document.addEventListener('DOMContentLoaded', function () {
             age_group_desc: ageGroupSelect.value
         };
 
-        const jsonFile = payload.course === "SCY" ? "Data/Quest_SCY.json" : "Data/Quest_LCM.json";
+        const jsonFile = payload.course === "SCY" ? "Data/SCY_05012025.json" : "Data/LCM_05012025.json";
 
         d3.json(jsonFile).then(data => {
             const results = data.Table2.Detail_Collection
@@ -127,7 +126,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     date: row["TextBox59"]
                 }));
 
-            // Populate table
             if (results.length === 0) {
                 resultsTable.innerHTML = `<tr><td colspan="4">No results found</td></tr>`;
                 return;
@@ -142,7 +140,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 </tr>
             `).join('');
 
-            // Animate
             setTimeout(() => {
                 Array.from(resultsTable.children).forEach(tr => tr.classList.add('show'));
             }, 50);
