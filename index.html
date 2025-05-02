@@ -12,60 +12,59 @@
   <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
+  <div class="wrapper">
+    <div class="header">
+      <img src="static/quest_logo.png" alt="Quest Swimming Logo">
+      <h1>QUEST ALL TIME TOP 10 TIMES</h1>
+    </div>
 
-  <div class="header">
-    <img src="static/quest_logo.png" alt="Quest Swimming Logo">
-    <h1>QUEST ALL TIME TOP 10 TIMES</h1>
+    <main class="content">
+      <form id="filter-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="course">Course:</label>
+            <select id="course" name="course"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="event">Event:</label>
+            <select id="event" name="event"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="gender">Gender:</label>
+            <select id="gender" name="gender"></select>
+          </div>
+
+          <div class="form-group">
+            <label for="age_group_desc">Age Group:</label>
+            <select id="age_group_desc" name="age_group_desc"></select>
+          </div>
+
+          <div class="form-group">
+            <button type="submit">Get Results</button>
+          </div>
+        </div>
+      </form>
+
+      <h2>Results</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Swim Time</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody id="results-table"></tbody>
+      </table>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Chris Bushelman. All rights reserved.</p>
+    </footer>
   </div>
-
-  <main class="content">
-    <form id="filter-form">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="course">Course:</label>
-          <select id="course" name="course"></select>
-        </div>
-
-        <div class="form-group">
-          <label for="event">Event:</label>
-          <select id="event" name="event"></select>
-        </div>
-
-        <div class="form-group">
-          <label for="gender">Gender:</label>
-          <select id="gender" name="gender"></select>
-        </div>
-
-        <div class="form-group">
-          <label for="age_group_desc">Age Group:</label>
-          <select id="age_group_desc" name="age_group_desc"></select>
-        </div>
-
-        <div class="form-group">
-          <button type="submit">Get Results</button>
-        </div>
-      </div>
-    </form>
-
-    <h2>Results</h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Rank</th>
-          <th>Name</th>
-          <th>Swim Time</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody id="results-table"></tbody>
-    </table>
-  </main>
-
-  <footer>
-  <p>&copy; 2025 Chris Bushelman. All rights reserved.</p>
-</footer>
-
-  </footer>
 
   <!-- App Logic -->
   <script src="QATT10.js"></script>
