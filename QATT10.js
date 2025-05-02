@@ -146,3 +146,5 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+// All code and intellectual property herein contain belongs to Chris Bushelman
